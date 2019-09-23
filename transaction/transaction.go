@@ -53,6 +53,9 @@ func (b *bean) check(f interface{}, args ...interface{}) error {
 		iFuncArgT := fType.In(i)
 		iArgT := reflect.TypeOf(args[i])
 		if iArgT.Kind() != iFuncArgT.Kind() {
+			if iFuncArgT.Kind() == reflect.Interface {
+				continue
+			}
 			return newError(errBeanFuncArgsMatch,
 				fmt.Sprintf("index: %d, func arg type: %s, arg type: %s", i, iFuncArgT.Kind(), iArgT.Kind()))
 		}
